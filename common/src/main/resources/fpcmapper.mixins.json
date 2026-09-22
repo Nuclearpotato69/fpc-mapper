@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.fpcmapper.mixin",
+  "compatibilityLevel": "${mixinCompat}",
+  "client": [
+    "ClientChunkManagerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

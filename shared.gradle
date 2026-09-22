@@ -1,0 +1,42 @@
+group = 'com.fpcmapper'
+version = "${mod_version}+${minecraft_version}"
+
+base {
+    archivesName = 'fpc-mapper'
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.fabricmc.net/' }
+}
+
+sourceSets.main {
+    java.srcDir "${rootDir}/common/src/main/java"
+    resources.srcDir "${rootDir}/common/src/main/resources"
+}
+
+def authToken = (findProperty('fpcAuthToken') ?: System.getenv('FPC_AUTH_TOKEN') ?: 'UNSET_BUILD_WITHOUT_REAL_TOKEN').toString()
+
+processResources {
+    def props = [
+        version      : project.version,
+        minecraftDep : minecraft_dep,
+        javaDep      : java_version,
+        mixinCompat  : "JAVA_${java_version}",
+        authToken    : authToken
+    ]
+    inputs.properties props
+    filteringCharset = 'UTF-8'
+    filesMatching(['fabric.mod.json', 'fpcmapper.mixins.json', 'fpcmapper-defaults.properties']) {
+        expand props
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = Integer.parseInt(java_version)
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion(java_version)
+    targetCompatibility = JavaVersion.toVersion(java_version)
+}

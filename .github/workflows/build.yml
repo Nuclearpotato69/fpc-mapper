@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - module: mc1_21_11
+            mc: "1.21.11"
+            java: 21
+          - module: mc26_2
+            mc: "26.2"
+            java: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: gradle
+
+      - name: Build ${{ matrix.mc }}
+        run: ./gradlew ":${{ matrix.module }}:build" --no-daemon
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fpc-mapper-${{ matrix.mc }}
+          path: ${{ matrix.module }}/build/libs/*.jar

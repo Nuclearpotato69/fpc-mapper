@@ -1,0 +1,18 @@
+plugins {
+    id 'net.fabricmc.fabric-loom-remap'
+}
+
+apply from: "${rootDir}/shared.gradle"
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}") {
+        exclude group: 'net.fabricmc.fabric-api', module: 'fabric-content-registries-v0'
+    }
+
+    include implementation('org.apache.httpcomponents.client5:httpclient5:5.3.1')
+    include implementation('org.apache.httpcomponents.core5:httpcore5:5.2.5')
+    include implementation('org.apache.httpcomponents.core5:httpcore5-h2:5.2.5')
+}
