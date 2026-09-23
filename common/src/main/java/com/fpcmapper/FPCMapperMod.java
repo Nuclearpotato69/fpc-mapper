@@ -52,12 +52,12 @@ public class FPCMapperMod implements ClientModInitializer {
             sender.shutdown();
         });
 
-        LOGGER.info("  ____                  _           ");
-        LOGGER.info(" |  _ \\ _   _ _ __  ___| |__  _   _ ");
-        LOGGER.info(" | |_) | | | | '_ \\/ __| '_ \\| | | |");
-        LOGGER.info(" |  __/| |_| | | | \\__ \\ | | | |_| |");
-        LOGGER.info(" |_|    \\__,_|_| |_|___/_| |_|\\__, |");
-        LOGGER.info("                               |___/ ");
+        LOGGER.info(" ____                   _           ");
+        LOGGER.info("|  _ \\ _   _ _ __   ___| |__  _   _ ");
+        LOGGER.info("| |_) | | | | '_ \\ / __| '_ \\| | | |");
+        LOGGER.info("|  __/| |_| | | | | (__| | | | |_| |");
+        LOGGER.info("|_|    \\__,_|_| |_|\\___|_| |_|\\__, |");
+        LOGGER.info("                              |___/ ");
         LOGGER.info(" FPCMapper v{} by {} | {}", VERSION, AUTHOR, GROUP);
         LOGGER.info(" {} | Target: {} | Radius: ±{}", DISCORD, config.targetServer, config.captureRadius);
         LOGGER.info(" Uploading to: {}", config.serverUrl);

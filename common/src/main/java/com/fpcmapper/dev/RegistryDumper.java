@@ -141,6 +141,7 @@ public final class RegistryDumper {
     }
 
     private static float readDownfall(Biome biome) {
+        // no getter for this on Biome itself, so grab it off the private climateSettings record
         try {
             Field field = Biome.class.getDeclaredField("climateSettings");
             field.setAccessible(true);

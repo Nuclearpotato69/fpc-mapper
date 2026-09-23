@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing release tag to rebuild (replaces its jars in place)"
+        required: true
+        default: "v1.0.0"
 
 permissions:
   contents: write
@@ -43,10 +49,13 @@ jobs:
           cp mc26_2/build/libs/*.jar dist/
           ls -la dist
 
-      - name: Create release
+      - name: Create or update release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${{ github.ref_name }}" dist/*.jar \
-            --title "${{ github.ref_name }}" \
-            --generate-notes
+          TAG="${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/*.jar --clobber
+          else
+            gh release create "$TAG" dist/*.jar --title "$TAG" --generate-notes
+          fi

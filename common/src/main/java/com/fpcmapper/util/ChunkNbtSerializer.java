@@ -182,6 +182,8 @@ public class ChunkNbtSerializer {
         return nbt;
     }
 
+    // Same bit-packed layout vanilla uses for palette data — pack N entries at the smallest
+    // bit width that fits the palette into a long[], no entry split across a long boundary.
     private static long[] packIndices(short[] indices, int count, int paletteSize) {
         int bitsPerEntry = Math.max(4, Integer.SIZE - Integer.numberOfLeadingZeros(paletteSize - 1));
         int entriesPerLong = 64 / bitsPerEntry;
